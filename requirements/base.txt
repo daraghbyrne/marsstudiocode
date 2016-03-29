@@ -1,0 +1,9 @@
+# Templates
+django-appconf==1.0.1
+django-compressor==1.5
+
+# Admin styling
+django-flat-theme==1.1.1
+
+# Bcrypt passwords
+bcrypt==1.1.1
