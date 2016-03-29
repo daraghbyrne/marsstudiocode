@@ -1,3 +1,5 @@
+FROM: https://github.com/fasouto/django-starter-template
+
 # django-starter-template #
 
 An easy to use project template for Django 1.8 that follows best practices.
