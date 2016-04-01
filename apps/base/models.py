@@ -17,4 +17,5 @@ class DataPoint(models.Model):
     photon_id = models.ForeignKey(Photon)
     sensor_id = models.ForeignKey(Sensor)
     value = models.DecimalField(max_digits=5, decimal_places=2)
+    image_address = models.CharField(max_length=500)
     gathered_at = models.DateTimeField('time gathered')
