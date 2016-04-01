@@ -10,13 +10,13 @@ from django.shortcuts import render
 
 
 def home(request):
-
-    return render(request, 'base/home.html')
+    context = {}
+    return render(request, 'base/home.html', context)
     
 def about(request):
-
-    return render(request, 'base/about.html')
+    context = {}
+    return render(request, 'base/about.html', context)
     
 def sensors(request):
-
-    return render(request, 'base/sensors.html')
+    context = {}
+    return render(request, 'base/sensors.html', context)
