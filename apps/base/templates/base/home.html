@@ -2,4 +2,22 @@
 
 {% block content %}
 
+<h1>List of Sensor Data</h1>
+{% if data %}
+    <table class='table'>
+        <tr><th>Location</th><th>Sensor</th><th>Value</th><th>Date and Time</th></tr>
+        <br>
+        {% for d in data %}
+            <tr>
+                <td>{% for p in photons %}{% if d.photon_id_id == p.id %}{{ p.location_description }}{% endif %}{% endfor %}</td>
+                <td>{% for s in sensors %}{% if d.sensor_id_id == s.id %}{{ s.sensor_type }}{% endif %}{% endfor %}</td>
+                <td>{{ d.value }} {% for s in sensors %}{% if d.sensor_id_id == s.id %}{{ s.units }}{% endif %}{% endfor %}</td>
+                <td>{{ d.gathered_at }}
+            </tr>
+        {% endfor %}
+    </table>
+{% else %}
+    <p>There is no data at this point.</p>
+{% endif %}
+
 {% endblock %}

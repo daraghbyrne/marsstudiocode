@@ -10,7 +10,11 @@ from django.shortcuts import render
 
 
 def home(request):
-    context = {}
+    context = {
+        'data': DataPoint.objects.all(),
+        'photons': Photon.objects.all(),
+        'sensors': Sensor.objects.all(),
+    }
     return render(request, 'base/home.html', context)
     
 def about(request):
@@ -18,5 +22,8 @@ def about(request):
     return render(request, 'base/about.html', context)
     
 def sensors(request):
-    context = {}
+    context = {
+        'photons': Photon.objects.all(),
+        'sensors': Sensor.objects.all(),
+    }
     return render(request, 'base/sensors.html', context)

@@ -2,4 +2,20 @@
 
 {% block content %}
 
+<h1>List of Hubs and Sensors</h1>
+<br>
+{% for p in photons %}
+    <h3>{{ p.name }} Hub (Photon), Located In: {{ p.location_description }}</h3>
+    <br>
+    <table class='table'>
+        <tr><th>Sensor Type</th><th>Description</th></tr>
+        {% for s in sensors %}
+            {% if s.photon_id_id == p.id %}
+                <tr><td>{{ s.sensor_type }}</td><td>{{ s.description }}</td>
+            {% endif %}
+        {% endfor %}
+    </table>
+    <br><br>
+{% endfor %}
+
 {% endblock %}
