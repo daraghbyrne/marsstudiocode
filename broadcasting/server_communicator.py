@@ -51,7 +51,6 @@ class DataPoster(threading.Thread):
         while True:
             # Wait for the next data point
             data = self.socket.recv(512)
-            logger.debug("Received Data for "+str(self.sensor))
 
             # Validate by castings to a float
             try:
