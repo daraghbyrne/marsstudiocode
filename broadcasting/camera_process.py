@@ -39,8 +39,8 @@ class CameraCapture(object):
             except:
                 logger.warning("Unable to retrieve and send images")
     
-                # Wait
-                time.sleep(PERIOD)
+            # Wait
+            time.sleep(PERIOD)
 
     def get_images(self):
         images = []
