@@ -7,11 +7,13 @@ from SimpleCV import Camera
 from util import Config, logger
 import time
 
-PERIOD = 5.0
+PERIOD = 10.0
 
 class CameraCapture(object):
 
     def __init__(self):
+        self.image_index = 0
+        
         self.n_cameras = int(Config.get("N_CAMERAS"))
 
         # Initialize the cameras
@@ -55,7 +57,8 @@ class CameraCapture(object):
         for i in xrange(self.n_cameras):
             img = images[i]
             img.show()
-            img.save("images/{}-{}.jpg".format(i, time.time()))
+            img.save(Config.get("IMAGES_DIR")+"{}-{}.jpg".format(i, self.image_index%100))
+        self.image_index+=1
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
