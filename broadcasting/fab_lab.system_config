@@ -9,3 +9,4 @@ WEBSERVER_POST_URI        /
 
 # System Configurations
 N_CAMERAS 1
+IMAGES_DIR  /home/mars/mars_images/
