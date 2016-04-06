@@ -1,6 +1,8 @@
 # Network configurations
+MY_IP                     128.2.20.138
 BROADCAST_IP              128.2.23.255
 BROADCAST_RECEIVING_IP    0.0.0.0
+PHOTON_UDP_IN_PORT        8000
 
 # Change to Heroku Server
 WEBSERVER_IP              128.237.186.150
