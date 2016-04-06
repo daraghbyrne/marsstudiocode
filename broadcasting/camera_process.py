@@ -26,18 +26,18 @@ class CameraCapture(object):
 
     def start(self):
         while True:
-        try:
-            # 1. Capture images from all cameras
-            logger.debug("Capturing Images")
-            images = self.get_images()
-            # 2. Send them to the remote server
-            logger.debug("Submitting Images")
-            self.post_images(images)
-        except:
-            logger.warning("Unable to retrieve and send images")
-
-            # Wait
-            time.sleep(PERIOD)
+            try:
+                # 1. Capture images from all cameras
+                logger.debug("Capturing Images")
+                images = self.get_images()
+                # 2. Send them to the remote server
+                logger.debug("Submitting Images")
+                self.post_images(images)
+            except:
+                logger.warning("Unable to retrieve and send images")
+    
+                # Wait
+                time.sleep(PERIOD)
 
     def get_images(self):
         images = []
