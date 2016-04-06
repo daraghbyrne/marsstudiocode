@@ -57,7 +57,6 @@ class PhotonCommunicator(object):
                 logger.warning("Error forwarding data")
 
             elapsed_time = time.time() - start_time
-            logger.debug("get_and_send processing time {}".format(elapsed_time))
 
             # Wait before we execute the next round
             time.sleep(max(0, PERIOD - elapsed_time))
