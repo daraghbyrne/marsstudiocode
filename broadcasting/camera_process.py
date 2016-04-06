@@ -23,6 +23,9 @@ class CameraCapture(object):
                 logger.warning("Error opening camera #"+str(i))
         
         self.n_cameras = len(self.cameras)
+        if self.n_cameras == 0:
+            logger.warning("Unable to find any cameras")
+            exit()
 
     def start(self):
         while True:
