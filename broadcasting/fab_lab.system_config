@@ -1,0 +1,11 @@
+# Network configurations
+BROADCAST_IP              128.2.23.255
+BROADCAST_RECEIVING_IP    0.0.0.0
+
+# Change to Heroku Server
+WEBSERVER_IP              128.237.186.150
+WEBSERVER_POST_URL        128.237.186.150:8000
+WEBSERVER_POST_URI        /
+
+# System Configurations
+N_CAMERAS 1
