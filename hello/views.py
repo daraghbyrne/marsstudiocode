@@ -15,6 +15,10 @@ def about(request):
     context = {}
     return render(request, 'about.html', context)
     
+def control(request):
+    context = {}
+    return render(request, 'control.html', context)
+    
 def sensors(request):
     context = {
         'photons': Photon.objects.all(),

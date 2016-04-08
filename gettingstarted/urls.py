@@ -10,9 +10,10 @@ import hello.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'^$', 'hello.views.home', name='home'),
-    url(r'^about/$', 'hello.views.about', name='about'),
-    url(r'^sensors/$', 'hello.views.sensors', name='sensors'),
+    url(r'^$', hello.views.home, name='home'),
+    url(r'^about/$', hello.views.about, name='about'),
+    url(r'^sensors/$', hello.views.sensors, name='sensors'),
+    url(r'^control/$',hello.views.control, name='control'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
 ]
