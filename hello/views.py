@@ -12,15 +12,15 @@ def home(request):
         'photons': Photon.objects.all(),
         'sensors': Sensor.objects.all(),
     }
-    return render(request, 'hello/home.html', context)
+    return render(request, 'templates/home.html', context)
     
 def about(request):
     context = {}
-    return render(request, 'hello/about.html', context)
+    return render(request, 'templates/about.html', context)
     
 def sensors(request):
     context = {
         'photons': Photon.objects.all(),
         'sensors': Sensor.objects.all(),
     }
-    return render(request, 'hello/sensors.html', context)
+    return render(request, 'templates/sensors.html', context)
