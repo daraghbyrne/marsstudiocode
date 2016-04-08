@@ -1,8 +1,5 @@
 from .models import * 
 from django.http import HttpResponse, Http404, HttpResponseRedirect
-from django.template import loader
-from django.shortcuts import get_object_or_404, render
-from django.db import transaction
 from django.shortcuts import render
 
 
