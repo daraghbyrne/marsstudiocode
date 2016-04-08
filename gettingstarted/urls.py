@@ -10,9 +10,9 @@ import hello.views
 # url(r'^blog/', include('blog.urls')),
 
 urlpatterns = [
-    url(r'', include('hello.urls')),
-
+    url(r'^$', 'helllo.views.home', name='home'),
+    url(r'^about/$', 'hello.views.about', name='about'),
+    url(r'^sensors/$', 'hello.views.sensors', name='sensors'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
 ]
