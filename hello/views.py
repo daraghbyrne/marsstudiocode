@@ -1,20 +1,26 @@
+from .models import * 
+from django.http import HttpResponse, Http404, HttpResponseRedirect
+from django.template import loader
+from django.shortcuts import get_object_or_404, render
+from django.db import transaction
 from django.shortcuts import render
-from django.http import HttpResponse
-
-from .models import Greeting
-
-# Create your views here.
-def index(request):
-    # return HttpResponse('Hello from Python!')
-    return render(request, 'index.html')
 
 
-def db(request):
-
-    greeting = Greeting()
-    greeting.save()
-
-    greetings = Greeting.objects.all()
-
-    return render(request, 'db.html', {'greetings': greetings})
-
+def home(request):
+    context = {
+        'data': DataPoint.objects.all(),
+        'photons': Photon.objects.all(),
+        'sensors': Sensor.objects.all(),
+    }
+    return render(request, 'base/home.html', context)
+    
+def about(request):
+    context = {}
+    return render(request, 'base/about.html', context)
+    
+def sensors(request):
+    context = {
+        'photons': Photon.objects.all(),
+        'sensors': Sensor.objects.all(),
+    }
+    return render(request, 'base/sensors.html', context)
