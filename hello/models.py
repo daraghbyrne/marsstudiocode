@@ -13,8 +13,12 @@ class Sensor(models.Model):
     units = models.CharField(max_length=50)
     
 class DataPoint(models.Model):
-    photon_id = models.ForeignKey(Photon)
     sensor_id = models.ForeignKey(Sensor)
     value = models.DecimalField(max_digits=5, decimal_places=2)
+    gathered_at = models.DateTimeField('time gathered')
+    
+class Image(models.Model):
+    #a camera is a sensor, but it'll have a dummy photon because it's hooked up to the computer
+    sensor_id = models.ForeignKey(Sensor)
     image_address = models.CharField(max_length=500, null=True)
     gathered_at = models.DateTimeField('time gathered')

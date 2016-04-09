@@ -25,3 +25,17 @@ def sensors(request):
         'sensors': Sensor.objects.all(),
     }
     return render(request, 'sensors.html', context)
+    
+def new_data(request):
+    if request.method == "POST":
+        #sensor_value, timestamp, sensor_id
+        d = DataPoint(sensor_id = request.POST['sensor_id'], value = request.POST['sensor_value'], gathered_at = request.POST['timestamp'])
+        d.save()
+        return HttpResponse()
+        
+def new_image(request):
+    if request.method == "POST":
+        #image_url, timestamp, sensor_id
+        i = Image(sensor_id = request.POST['sensor_id'], image_address = request.POST['image_url'], gathered_at = request.POST['timestamp'])
+        i.save()
+        return HttpResponse()

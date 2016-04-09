@@ -16,4 +16,7 @@ urlpatterns = [
     url(r'^control/$',hello.views.control, name='control'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
+    # Getting data from server
+    url(r'^new_data/$',hello.views.new_data, name='new_data'),
+    url(r'^new_image/$',hello.views.new_image, name='new_image'),
 ]
