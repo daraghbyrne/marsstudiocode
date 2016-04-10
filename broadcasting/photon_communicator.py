@@ -51,8 +51,8 @@ class PhotonCommunicator(object):
             start_time = time.time()
 
             try:
-                #self.get_and_send_api()
-                self.get_and_send_udp()
+                self.get_and_send_api()
+                #self.get_and_send_udp()
             except Exception, e:
                 logger.warning("Error forwarding data")
 

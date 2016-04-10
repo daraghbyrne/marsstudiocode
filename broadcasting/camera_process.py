@@ -6,8 +6,12 @@ import sys
 from SimpleCV import Camera
 from util import Config, logger
 import time
+import boto3
+from datetime import datetime
 
-PERIOD = 10.0
+PERIOD = 60.0
+IMG_POST_FMT = "image_url={}&timestamp={}&sensor_id=2"
+IMG_URL_FMT = "http://{}.s3.amazonaws.com/{}"
 
 class CameraCapture(object):
 
@@ -28,6 +32,10 @@ class CameraCapture(object):
         if self.n_cameras == 0:
             logger.warning("Unable to find any cameras")
             exit()
+
+        # Get S3 instance for 
+        self.s3 = boto3.resource('s3')
+        self.bucket_name = Config.get("BUCKET_NAME")
 
     def start(self):
         while True:
@@ -53,12 +61,26 @@ class CameraCapture(object):
         return images
 
     def post_images(self, images):
-        #Todo: Saving the images to disk until webserver is up and running
         for i in xrange(self.n_cameras):
+            # Upload image to S3
             img = images[i]
-            img.show()
-            img.save(Config.get("IMAGES_DIR")+"{}-{}.jpg".format(i, self.image_index%100))
-        self.image_index+=1
+            img_name = Config.get("IMAGES_DIR")+"{}-{}.jpg".format(i, int(time.time()))
+            img.save("/tmp/temp_mars_img.jpg")
+            with open("/tmp/temp_mars_img.jpg", 'rb') as f:
+                self.s3.Object(self.bucket_name, img_name).put(Body=f)
+
+            # Send img url to webserver
+            timestamp = datetime.now().isoformat()
+            img_url = IMG_URL_FMT.format(self.bucket_name, img_name)
+            post_data = IMG_POST_FMT.format(img_url, timestamp)
+            http = httplib.HTTPConnection(Config.get("WEBSERVER_HOST_NAME"))
+            http.request("POST", Config.get("WEBSERVER_POST_IMG_URI"), post_data)
+            response = http.getresponse()
+            if response.status != 200:
+                logger.warning("Error posting images to webserver. " + response.reason)
+            else:
+                logger.debug("Image Successful: "+img_url)
+
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:

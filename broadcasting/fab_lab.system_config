@@ -5,9 +5,9 @@ BROADCAST_RECEIVING_IP    0.0.0.0
 PHOTON_UDP_IN_PORT        8000
 
 # Change to Heroku Server
-WEBSERVER_IP              128.237.169.25
-WEBSERVER_POST_URL        128.237.169.25:8000
-WEBSERVER_POST_URI        /
+WEBSERVER_HOSTNAME        http://marsserver.herokuapp.com
+WEBSERVER_POST_IMG URI    /new_image
+WEBSERVER_POST_DATA_URI   /new_data
 
 # System Configurations
 N_CAMERAS 1

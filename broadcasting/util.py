@@ -4,6 +4,7 @@ This package contains all common utilities used by the programs.
 import logging
 from logging import handlers
 import sys
+import datetime
 
 # Set up logger
 COMMENT_DELIMITER = "#"
@@ -77,11 +78,11 @@ class Sensor(object):
     """
     Sensor class used to represent the sensors within the system.
     """
-    def __init__(self, sensor_name, photon_id, udp_port, api_uri):
+    def __init__(self, sensor_name, sensor_id, udp_port, api_uri):
         self.sensor_name = sensor_name
         self.udp_port = int(udp_port)
         self.api_uri = api_uri
-        self.photon_id = photon_id
+        self.sensor_id = sensor_id
 
     def __str__(self):
-        return "({}, {}, {}, {})".format(self.sensor_name, self.photon_id, self.udp_port, self.api_uri)
+        return "({}, {}, {}, {})".format(self.sensor_name, self.sensor_id, self.udp_port, self.api_uri)

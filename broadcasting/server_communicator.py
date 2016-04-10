@@ -5,8 +5,10 @@ from socket import *
 from util import logger
 from util import Config
 import httplib
+from datetime import datetime
 
-POST_DATA_FORMAT = "photon_id={}&sensor_type={}&value={}&gathered_at={}"
+
+POST_DATA_FORMAT = "sensor_id={}&sensor_value={}&timestamp={}"
 
 class ServerCommunicator(object):
     """
@@ -66,12 +68,13 @@ class DataPoster(threading.Thread):
                 logger.warning("Unable to POST data")
 
     def post_data(self, data):
-        post_data = POST_DATA_FORMAT.format(self.sensor.photon_id,
-                                            self.sensor.sensor_name,
-                                            data,
-                                            time.time())
-        http = httplib.HTTPConnection(Config.get("WEBSERVER_POST_URL"))
-        resp = http.request("POST", Config.get("WEBSERVER_POST_URI"), post_data)
+        timestamp = datetime.now().isoformat()
+        post_data = POST_DATA_FORMAT.format(self.sensor.sensor_id, data, timestamp)
+        http = httplib.HTTPConnection(Config.get("WEBSERVER_HOST_NAME"))
+        http.request("POST", Config.get("WEBSERVER_POST_DATA_URI"), post_data)
+        response = http.getresponse()
+        if response.status != 200:
+            logger.warning("Error posting images to webserver. " + response.reason)
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
