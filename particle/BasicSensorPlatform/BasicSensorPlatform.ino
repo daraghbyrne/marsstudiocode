@@ -5,6 +5,12 @@
 // This #include statement was automatically added by the Spark IDE.
 #include "spark-dallas-temperature.h"
 
+#include "rest_client.h"
+
+
+RestClient rest_client = RestClient("marsserver.herokuapp.com");
+String rest_response;
+
 
 const bool SHOW_DEBUG_INFO = true;
 
@@ -79,6 +85,8 @@ void loop()
   readSensors();
   printDebugInfo();
 
+  postSoilMoistureToServer();
+
   delay( 1000 );
 
 }
@@ -113,6 +121,27 @@ void readSensors()
 
 
 }
+
+
+
+void postSoilMoistureToServer()
+{
+
+  time_t time = Time.now();
+
+  String post_data = "sensor_value=" + String( soilMoistureReading ) + "&timestamp=" + String( Time.format(time, TIME_FORMAT_ISO8601_FULL) ) + "&sensor_id=soil_moisture_1"  ;
+  post_data = "sensor_value=" + String( soilMoistureReading ) ;
+
+
+  int statusCode = rest_client.post("/new_data", "POSTDATA", &rest_response);
+
+  Serial.println( post_data );
+  Serial.print("Status code from server: ");
+  Serial.println( statusCode );
+  Serial.print("Response body from server: ");
+  Serial.println(rest_response);
+}
+
 
 void printDebugInfo()
 {
