@@ -6,6 +6,7 @@ from django.shortcuts import render
 def home(request):
     context = {
         'data': DataPoint.objects.all(),
+        'images': Image.objects.all(),
         'photons': Photon.objects.all(),
         'sensors': Sensor.objects.all(),
     }

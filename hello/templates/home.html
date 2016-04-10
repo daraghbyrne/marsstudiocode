@@ -25,13 +25,29 @@
                     <td>{% for p in photons %}{% if d.photon_id_id == p.id %}{{ p.location_description }}{% endif %}{% endfor %}</td>
                     <td>{% for s in sensors %}{% if d.sensor_id_id == s.id %}{{ s.sensor_type }}{% endif %}{% endfor %}</td>
                     <td>{{ d.value }} {% for s in sensors %}{% if d.sensor_id_id == s.id %}{{ s.units }}{% endif %}{% endfor %}</td>
-                    <td>{{ d.gathered_at }}
+                    <td>{{ d.gathered_at }}</td>
                 </tr>
             {% endfor %}
         </table>
-    {% else %}
+      {% else %}
         <p>There is no data at this point.</p>
-    {% endif %}
+      {% endif %}
+      <br><br>
+      <h3><span class="glyphicon glyphicon-info-sign"></span> Most recent images displayed first</h3>
+      {% if images %}
+        <table class='table'>
+            <tr><th>Picture</th><th>Date and Time</th></tr>
+            <br>
+            {% for i in images %}
+                <tr>
+                    <td><img src={{ i.image_address }} alt="Image taken inside habitat" height="100" width="200"></td>
+                    <td>{{ i.gathered_at }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+      {% else %}
+        <p>There are no images at this point.</p>
+      {% endif %}
     </div>
   </div> <!-- row -->
    <div class="alert alert-info text-center" role="alert">
