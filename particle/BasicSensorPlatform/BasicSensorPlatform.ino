@@ -59,11 +59,11 @@ int             co2_percentage;
 float           co2_volts;
 
 
-
-Timer publishTimer( 1000, publishCurrentState );
+Timer publishTimer( 60000, publishCurrentState );
 
 void setup()
 {
+  Time.zone(-5);
 
   Particle.variable("soil_moisture", &soilMoistureReading, INT);
   Particle.variable("soil_temp", &soilProbeTemp, DOUBLE);
@@ -82,12 +82,10 @@ void setup()
 void loop()
 {
 
-  readSensors();
-  printDebugInfo();
+  //readSensors();
 
-  postSoilMoistureToServer();
 
-  delay( 1000 );
+  //delay( 10000 );
 
 }
 
@@ -95,13 +93,19 @@ void publishCurrentState( )
 {
   //String stateStr = String( currentState );
   //Particle.publish( "currentState", stateStr );
-  //readSensors();
+  readSensors();
+
+  printDebugInfo();
+
+  postReadingToServer( soilMoistureReading );
+  postReadingToServer( uvSensorReading );
+  postReadingToServer( luminanceReading );
+
 }
 
 void readSensors()
 {
     soilMoistureReading = analogRead( soilMostureSensorPin );
-
     uvSensorReading = analogRead( uvSensorPin );
     luminanceReading = analogRead( luminanceSensorPin );
 
@@ -113,33 +117,30 @@ void readSensors()
     // convert to double
     soilProbeTemp = (double)tempC;
 
-
     // Get the CO2 concentration;
     co2_volts = MGRead( co2_pin );
     co2_percentage = MGGetPercentage(co2_volts,CO2Curve);
-
-
 
 }
 
 
 
-void postSoilMoistureToServer()
+void postReadingToServer( int reading )
 {
-
   time_t time = Time.now();
 
-  String post_data = "sensor_value=" + String( soilMoistureReading ) + "&timestamp=" + String( Time.format(time, TIME_FORMAT_ISO8601_FULL) ) + "&sensor_id=soil_moisture_1"  ;
-  post_data = "sensor_value=" + String( soilMoistureReading ) ;
+  String timeString = String( Time.format(time, TIME_FORMAT_ISO8601_FULL) );
+  timeString = timeString.replace("T", " ");
 
+  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=1"  ;
 
-  int statusCode = rest_client.post("/new_data", "POSTDATA", &rest_response);
+  int statusCode = rest_client.post("/new_data/", post_data, &rest_response);
 
-  Serial.println( post_data );
-  Serial.print("Status code from server: ");
-  Serial.println( statusCode );
-  Serial.print("Response body from server: ");
-  Serial.println(rest_response);
+  //Serial.println( post_data );
+  //Serial.print("Status code from server: ");
+  //Serial.println( statusCode );
+  //Serial.print("Response body from server: ");
+  //Serial.println(rest_response);
 }
 
 
