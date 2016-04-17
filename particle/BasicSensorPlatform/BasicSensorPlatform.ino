@@ -59,7 +59,7 @@ int             co2_percentage;
 float           co2_volts;
 
 
-Timer publishTimer( 60000, publishCurrentState );
+Timer publishTimer( 300000, publishCurrentState );
 
 void setup()
 {
