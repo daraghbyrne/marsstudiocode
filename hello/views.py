@@ -2,6 +2,7 @@ from .models import *
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
+from datetime import datetime, timedelta
 
 
 def home(request):
@@ -42,6 +43,6 @@ def new_image(request):
     if request.method == "POST":
         #image_url, timestamp, sensor_id
         sen = Sensor.objects.get(id = int(request.POST.get('sensor_id', 0)))
-        i = Image(sensor_id = sen, image_address = request.POST.get('image_url', 0), gathered_at = request.POST.get('timestamp', 0))
+        i = Image(sensor_id = sen, image_address = request.POST.get('image_url', 0), gathered_at = request.POST.get('timestamp' + timedelta(hours=-4), 0))
         i.save()
         return HttpResponse()
