@@ -13,6 +13,9 @@
 </div>
 <div class="container">
   <hr>
+  <div class="alert alert-info text-center" role="alert">
+    This data is streaming live from the on-site computer and is limited to the most recent 50 entries. If there is no recent data, that means that the connection has ben interrupted. Data is still being gathered and queued, and it will be available as soon as the connection is restored. 
+  </div>
   <div class="row">
     <div class="col-md-12">
       <h3><span class="glyphicon glyphicon-info-sign"></span> Most recent data displayed first</h3>
@@ -22,7 +25,7 @@
             <br>
             {% for d in data %}
                 <tr>
-                    <td>{% for p in photons %}{% if d.photon_id_id == p.id %}{{ p.location_description }}{% endif %}{% endfor %}</td>
+                    <td>{% for p in photons %}{% if d.photon_id == p.id %}{{ p.location_description }}{% endif %}{% endfor %}</td>
                     <td>{% for s in sensors %}{% if d.sensor_id_id == s.id %}{{ s.sensor_type }}{% endif %}{% endfor %}</td>
                     <td>{{ d.value }} {% for s in sensors %}{% if d.sensor_id_id == s.id %}{{ s.units }}{% endif %}{% endfor %}</td>
                     <td>{{ d.gathered_at }}</td>
@@ -51,8 +54,5 @@
     </div>
   <br>
   </div> <!-- row -->
-   <div class="alert alert-info text-center" role="alert">
-    This data is streaming live from the on-site computer. If there is no recent data, that means that the connection has ben interrupted. Data is still being gathered and queued, and it will be available as soon as the connection is restored. 
-  </div>
 </div>
 {% endblock %}

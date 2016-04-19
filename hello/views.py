@@ -6,10 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 
 def home(request):
     context = {
-        'data': DataPoint.objects.all(),
-        'images': Image.objects.all(),
-        'photons': Photon.objects.all(),
-        'sensors': Sensor.objects.all(),
+        'data': DataPoint.objects.order_by('-gathered_at')[:50],
+        'images': Image.objects.order_by('-gathered_at')[:50],
+        'photons': Photon.objects.order_by('name'),
+        'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
     }
     return render(request, 'home.html', context)
     
