@@ -34,7 +34,7 @@ def new_data(request):
     if request.method == "POST":
         #sensor_value, timestamp, sensor_id)
         sen = Sensor.objects.get(id = int(request.POST.get('sensor_id')))
-        d = DataPoint(sensor_id = sen, value = float(request.POST.get('sensor_value', 0.0)), gathered_at = request.POST.get('timestamp' + timedelta(hours=-4), 0))
+        d = DataPoint(sensor_id = sen, value = float(request.POST.get('sensor_value', 0.0)), gathered_at = (request.POST.get('timestamp', 0) + timedelta(hours=-4)))
         d.save()
         return HttpResponse()
 
@@ -43,6 +43,6 @@ def new_image(request):
     if request.method == "POST":
         #image_url, timestamp, sensor_id
         sen = Sensor.objects.get(id = int(request.POST.get('sensor_id', 0)))
-        i = Image(sensor_id = sen, image_address = request.POST.get('image_url', 0), gathered_at = request.POST.get('timestamp' + timedelta(hours=-4), 0))
+        i = Image(sensor_id = sen, image_address = request.POST.get('image_url', 0), gathered_at = (request.POST.get('timestamp', 0) + timedelta(hours=-4)))
         i.save()
         return HttpResponse()
