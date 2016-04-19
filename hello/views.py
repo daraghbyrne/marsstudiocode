@@ -34,7 +34,7 @@ def new_data(request):
     if request.method == "POST":
         #sensor_value, timestamp, sensor_id)
         sen = Sensor.objects.get(id = int(request.POST.get('sensor_id')))
-        d = DataPoint(sensor_id = sen, value = float(request.POST.get('sensor_value', 0.0)), gathered_at = request.POST.get('timestamp', 0))
+        d = DataPoint(sensor_id = sen, value = float(request.POST.get('sensor_value', 0.0)), gathered_at = request.POST.get('timestamp' + timedelta(hours=-4), 0))
         d.save()
         return HttpResponse()
 
