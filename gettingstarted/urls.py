@@ -13,7 +13,8 @@ urlpatterns = [
     url(r'^$', hello.views.home, name='home'),
     url(r'^about/$', hello.views.about, name='about'),
     url(r'^sensors/$', hello.views.sensors, name='sensors'),
-    url(r'^control/$',hello.views.control, name='control'),
+    url(r'^control/$', hello.views.control, name='control'),
+    url(r'^getcsv/$', hello.views.get_csv, name='get CSV'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     # Getting data from server

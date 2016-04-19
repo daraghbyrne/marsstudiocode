@@ -3,7 +3,18 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
+import csv
 
+def get_csv(request):
+    # Create the HttpResponse object with the appropriate CSV header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="marsdata.csv"'
+
+    writer = csv.writer(response)
+    for d in DataPoint.objects.order_by('-gathered_at'):
+        writer.writerow([str(d.name), str(d.sensor_type), str(d.description), d.value, str(d.units), str(d.gathered_at)])
+
+    return response
 
 def home(request):
     context = {
