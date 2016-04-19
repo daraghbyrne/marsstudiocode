@@ -12,7 +12,7 @@ def get_csv(request):
 
     writer = csv.writer(response)
     for d in DataPoint.objects.order_by('-gathered_at'):
-        writer.writerow([str(d.name), str(d.sensor_type), str(d.description), d.value, str(d.units), str(d.gathered_at)])
+        writer.writerow([str(d.sensor_id.photon_id.name), str(d.sensor_id.sensor_type), str(d.sensor_id.description), d.value, str(d.sensor_id.units), str(d.gathered_at)])
 
     return response
 
