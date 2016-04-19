@@ -11,6 +11,7 @@ def get_csv(request):
     response['Content-Disposition'] = 'attachment; filename="marsdata.csv"'
 
     writer = csv.writer(response)
+    writer.writerow("Photon Name", "Sensor Type", "Sensor Description", "Sensor Value", "Sensor Units", "Date and Time")
     for d in DataPoint.objects.order_by('-gathered_at'):
         writer.writerow([str(d.sensor_id.photon_id.name), str(d.sensor_id.sensor_type), str(d.sensor_id.description), d.value, str(d.sensor_id.units), str(d.gathered_at)])
 
