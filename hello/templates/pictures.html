@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container">
+  <hr>
+  <div class="row">
+    <h1>All Image Gallery</h1>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+        {% for i in images %}
+            <a href={{ i.image_address }} data-toggle="popover" title="Date Taken" data-html="true" data-content='<img src={{ i.image_address }} alt="Image taken inside habitat" height="300">'>{{ i.gathered_at }}</a>
+        {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

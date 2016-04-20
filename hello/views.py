@@ -30,6 +30,12 @@ def about(request):
     context = {}
     return render(request, 'about.html', context)
     
+def pictures(request):
+    context = {
+        'images': Image.objects.order_by('-gathered_at'),
+    }
+    return render(request, 'pictures.html', context)
+    
 def control(request):
     context = {}
     return render(request, 'control.html', context)

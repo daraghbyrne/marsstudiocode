@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^sensors/$', hello.views.sensors, name='sensors'),
     url(r'^control/$', hello.views.control, name='control'),
     url(r'^getcsv/$', hello.views.get_csv, name='get CSV'),
+    url(r'^pictures/$', hello.views.pictures, name='Image Gallery'),
     # Admin
     url(r'^admin/', include(admin.site.urls)),
     # Getting data from server
