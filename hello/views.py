@@ -19,8 +19,8 @@ def get_csv(request):
 
 def home(request):
     context = {
-        'data': DataPoint.objects.order_by('-gathered_at')[:50],
-        'images': Image.objects.order_by('-gathered_at')[:50],
+        'data': DataPoint.objects.order_by('-gathered_at')[:30],
+        'images': Image.objects.order_by('-gathered_at')[:20],
         'photons': Photon.objects.order_by('name'),
         'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
     }
