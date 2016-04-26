@@ -6,6 +6,10 @@ import sys
 import time
 import boto3
 import logging
+import httplib
+import subprocess
+import shlex
+from logging import handlers
 from SimpleCV import Camera
 from datetime import datetime
 
@@ -19,7 +23,7 @@ class CameraCapture(object):
         self.image_index = 0
         
         # Initialize the cameras
-        self.cameras = Camera(camera_index = i)
+        self.camera = Camera()
         
         # Get S3 instance for 
         self.s3 = boto3.resource('s3')
@@ -29,6 +33,7 @@ class CameraCapture(object):
         logger_format_string = '[%(processName)s:%(funcName)s][%(asctime)s][%(levelname)s]%(message)s'
         log_format = logging.Formatter(logger_format_string)
         self.logger = logging.getLogger('')
+        self.logger.setLevel(logging.DEBUG)
         fh = logging.handlers.RotatingFileHandler("mars_log_file", maxBytes=(1048576*5), backupCount=7)
         fh.setFormatter(log_format)
         self.logger.addHandler(fh)
@@ -39,7 +44,7 @@ class CameraCapture(object):
             try:
                 # 1. Capture images from all cameras
                 #logger.debug("Capturing Images")
-                image = self.getImage()
+                image = self.camera.getImage()
                 # 2. Send them to the remote server
                 #logger.debug("Submitting Images")
                 self.post_image(image)
@@ -63,17 +68,21 @@ class CameraCapture(object):
         # Create the post data
         post_data = IMG_POST_FMT.format(img_url, timestamp)
         # Connect to the server
-        http = httplib.HTTPConnection("http://marsserver.herokuapp.com")
+        """
+        http = httplib.HTTPSConnection("marsserver.herokuapp.com")
         # Submit and check the request
-        http.request("POST", "new_image/", post_data)
+        http.request("POST", "new_image", post_data)
         response = http.getresponse()
         if response.status != 200:
             self.logger.warning("Error posting images to webserver. " + response.reason)
+        else:
+            print img_url
+        """
+        curl_string = "curl --data \"{}\" -X POST https://marsserver.herokuapp.com/new_image/"
+        curl_string = curl_string.format(post_data)
+        subprocess.call(shlex.split(curl_string))
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print "usage: ./camera_process.py"
-
     # Start
     cc = CameraCapture()
     cc.start()
