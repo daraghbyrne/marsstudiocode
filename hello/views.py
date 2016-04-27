@@ -33,22 +33,22 @@ def about(request):
     return render(request, 'about.html', context)
     
 def time_lapse(request):
-    ##FROM: http://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
-    #file_names = Image.objects.all().values_list('image_address')
-    #images = [Image.open(fn) for fn in file_names]
-    #
+    #FROM: http://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
+    file_names = Image.objects.all().values_list('image_address')[:50]
+    images = [Image.open(fn) for fn in file_names]
+    
     ## writeGif(filename, images, duration=0.1, loops=0, dither=1)
     ##    Write an animated gif from the specified images.
     ##    images should be a list of numpy arrays of PIL images.
     ##    Numpy images of type float should have pixels between 0 and 1.
     ##    Numpy images of other types are expected to have values between 0 and 255.
-    #
-    #filename = "gif%s.GIF" % str(datetime.datetime.now())
-    #writeGif(filename, images, duration=0.03)
     
-    context = {}
+    filename = "gif%s.GIF" % str(datetime.datetime.now())
+    writeGif(filename, images, duration=0.03)
     
-    
+    context = {
+        'filename': ("../filename")
+    }
     return render(request, 'time_lapse.html', context)
     
 def pictures(request):
