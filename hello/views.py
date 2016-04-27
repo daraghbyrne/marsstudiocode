@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 import csv
+from .images2gif import Image as ImagePackage
 from .images2gif import writeGif
 import os
 
@@ -35,7 +36,7 @@ def about(request):
 def time_lapse(request):
     #FROM: http://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
     file_names = Image.objects.all().values_list('image_address')[:50]
-    images = [Image.open(fn) for fn in file_names]
+    images = [ImagePackage.open(fn) for fn in file_names]
     
     ## writeGif(filename, images, duration=0.1, loops=0, dither=1)
     ##    Write an animated gif from the specified images.
