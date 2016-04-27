@@ -41,9 +41,7 @@ def time_lapse(request):
     images = []
     for fn in file_names:
         with urllib.request.urlopen(fn[0]) as response:
-            print(response)
             images.append(ImagePackage.open(response))
-    print(images)
     
     ## writeGif(filename, images, duration=0.1, loops=0, dither=1)
     ##    Write an animated gif from the specified images.
@@ -51,11 +49,11 @@ def time_lapse(request):
     ##    Numpy images of type float should have pixels between 0 and 1.
     ##    Numpy images of other types are expected to have values between 0 and 255.
     
-    filename = b"marsgif.GIF"
-    writeGif(filename, images, duration=0.03)
+    filename = "marsgif.GIF"
+    #writeGif(filename, images, duration=0.03)
     
     context = {
-        'filename': ("../filename")
+        'filename': ("../" + filename)
     }
     return render(request, 'time_lapse.html', context)
     
