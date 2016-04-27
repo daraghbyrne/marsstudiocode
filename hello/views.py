@@ -5,7 +5,6 @@ from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 import csv
 from .images2gif import writeGif
-from PIL import Image
 import os
 
 def get_csv(request):
