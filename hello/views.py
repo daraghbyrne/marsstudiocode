@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from datetime import datetime, timedelta
 import csv
+import images2gif
 from images2gif import writeGif
 from PIL import Image
 import os
