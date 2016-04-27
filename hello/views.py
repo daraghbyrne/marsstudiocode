@@ -38,7 +38,10 @@ def time_lapse(request):
     #FROM: http://stackoverflow.com/questions/753190/programmatically-generate-video-or-animated-gif-in-python
     file_names = Image.objects.all().values_list('image_address')[:50]
 
-    images = [with urllib.request.urlopen(fn[0]) as response: ImagePackage.open(response) for fn in file_names]
+    images = []
+    for fn in file_names:
+        with urllib.request.urlopen(fn[0]) as response:
+            images.append(ImagePackage.open(response))
     
     ## writeGif(filename, images, duration=0.1, loops=0, dither=1)
     ##    Write an animated gif from the specified images.
