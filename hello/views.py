@@ -41,7 +41,9 @@ def time_lapse(request):
     images = []
     for fn in file_names:
         with urllib.request.urlopen(fn[0]) as response:
+            print(response)
             images.append(ImagePackage.open(response))
+    print(images)
     
     ## writeGif(filename, images, duration=0.1, loops=0, dither=1)
     ##    Write an animated gif from the specified images.
