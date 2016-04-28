@@ -135,7 +135,7 @@ def _writeGifToFile(fp, images, durations, loops):
         occur.append( palettes.count( palette ) )
     
     # Select most-used palette as the global one (or first in case no max)
-    globalPalette = palettes[ occur.index(max(occur)) ]
+    globalPalette = palettes[0]
     
     # Init
     frames = 0
@@ -155,10 +155,8 @@ def _writeGifToFile(fp, images, durations, loops):
             bite = bytearray()
             bite.extend(map(ord, header))
             fp.write(bite)
-            
-            bite = bytearray()
-            bite.extend(map(ord, globalPalette))
-            fp.write(bite)
+
+            fp.write(globalPalette)
             
             fp.write(appext)
             
