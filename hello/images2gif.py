@@ -152,7 +152,9 @@ def _writeGifToFile(fp, images, durations, loops):
             appext = getAppExt(loops)
             
             # Write
-            fp.write(bytearray(header))
+            bite = bytearray()
+            bite.extend(map(ord, header))
+            fp.write(bite)
             fp.write(globalPalette)
             fp.write(appext)
             
