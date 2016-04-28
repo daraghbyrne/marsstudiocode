@@ -49,7 +49,7 @@ def time_lapse(request):
     ##    Numpy images of type float should have pixels between 0 and 1.
     ##    Numpy images of other types are expected to have values between 0 and 255.
     
-    writeGif("marsgif.GIF", images)
+    #writeGif("marsgif.GIF", images)
     
     context = {
         'filename': ("../" + filename)
