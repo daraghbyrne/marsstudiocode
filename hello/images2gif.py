@@ -155,7 +155,11 @@ def _writeGifToFile(fp, images, durations, loops):
             bite = bytearray()
             bite.extend(map(ord, header))
             fp.write(bite)
-            fp.write(globalPalette)
+            
+            bite = bytearray()
+            bite.extend(map(ord, globalPalette))
+            fp.write(bite)
+            
             fp.write(appext)
             
             # Next frame is not the first
