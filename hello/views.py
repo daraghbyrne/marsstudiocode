@@ -28,8 +28,8 @@ def home(request):
         'images': Image.objects.order_by('-gathered_at')[:20],
         'photons': Photon.objects.order_by('name'),
         'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
-        'data_pts': json.dumps([str(d[0]) for d in DataPoint.objects.order_by('-gathered_at').values_list('value')[:30]]),
-        'data_dates': json.dumps([d[0] for d in DataPoint.objects.order_by('-gathered_at').values_list('gathered_at')[:30]]),
+        'data_pts': json.dumps([d[0] for d in DataPoint.objects.order_by('-gathered_at').values_list('value')[:30]]),
+        'data_dates': json.dumps([str(d[0]) for d in DataPoint.objects.order_by('-gathered_at').values_list('gathered_at')[:30]]),
     }
     return render(request, 'home.html', context)
     
