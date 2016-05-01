@@ -20,8 +20,8 @@
     <div class="col-md-12">
       <h3><span class="glyphicon glyphicon-info-sign"></span> Most recent data displayed first</h3>
       {% if data %}
-      <div id="graph">
-        <script>
+      <div id="graph" style="width:100%; height:400px;"></div>
+      <script>
             $(function () {
                 $('#graph').highcharts({
                     title: {
@@ -71,7 +71,6 @@
                 });
             });
         </script>
-      </div>
         <table class='table'>
             <tr><th>Sensor</th><th>Value</th><th>Date and Time</th></tr>
             <br>
