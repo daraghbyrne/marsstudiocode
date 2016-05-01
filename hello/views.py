@@ -64,6 +64,7 @@ def pictures(request):
     
 def control(request):
     context = {}
+    
     return render(request, 'control.html', context)
     
 def sensors(request):
