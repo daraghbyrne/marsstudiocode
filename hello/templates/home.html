@@ -33,7 +33,7 @@
                         x: -20
                     },
                     xAxis: {
-                        categories: {{ [d[0] for d in Data.values_list('gathered_at')] }}
+                        categories: {{ [da[0] for da in data.values_list('gathered_at')] }}
                     },
                     yAxis: {
                         title: {
