@@ -7,12 +7,42 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="jquery.slides.min.js"></script>
   <script>
   $(document).ready(function(){
       $('[data-toggle="tooltip"]').tooltip(); 
   });
   </script>
+  <script>
+    $(function(){
+      $("#slides").slidesjs({
+        width: 940,
+        height: 528
+        play: {
+          active: true,
+            // [boolean] Generate the play and stop buttons.
+            // You cannot use your own buttons. Sorry.
+          effect: "fade",
+            // [string] Can be either "slide" or "fade".
+          interval: 1000,
+            // [number] Time spent on each slide in milliseconds.
+          auto: true,
+            // [boolean] Start playing the slideshow on load.
+          swap: false,
+            // [boolean] show/hide stop and play buttons
+          pauseOnHover: true,
+            // [boolean] pause a playing slideshow on hover
+          restartDelay: 1000
+            // [number] restart delay on inactive slideshow
+        }
+      });
+    });
+  </script>
   <style type="text/css">
+    /* Prevents slides from flashing */
+    #slides {
+      display:none;
+    }
     .jumbotron {
         background: #b57341;
         color: white;

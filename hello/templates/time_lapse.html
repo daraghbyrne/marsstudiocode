@@ -8,8 +8,12 @@
     <div class="col-md-12">
         <h1>Time Lapse</h1>
 
-        <p>This is a time lapse of the past week of activity.</p>
-        <img src={{ filename }} alt="Time Lapse">
+        <p>This is a time lapse (slide show) of the past 4 hours of activity.</p>
+        <div id="slides">
+        {% for im in files %}
+            <img src={{ im }} alt="Time Lapse">
+        {% endfor %}
+        </div>
     </div>
   </div>
 </div>
