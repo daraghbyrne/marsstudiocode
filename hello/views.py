@@ -27,9 +27,9 @@ def home(request):
         'photons': Photon.objects.order_by('name'),
         'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
         'thirteen': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=13).order_by('-gathered_at').values_list('value')[:30]]),
-        'thirty-six': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_idid=36).order_by('-gathered_at').values_list('value')[:30]]),
-        'fourty-one': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_idid=41).order_by('-gathered_at').values_list('value')[:30]]),
-        'fourty-four': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_idid=44).order_by('-gathered_at').values_list('value')[:30]]),
+        'thirty-six': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=36).order_by('-gathered_at').values_list('value')[:30]]),
+        'fourty-one': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=41).order_by('-gathered_at').values_list('value')[:30]]),
+        'fourty-four': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=44).order_by('-gathered_at').values_list('value')[:30]]),
         
     }
     return render(request, 'home.html', context)
