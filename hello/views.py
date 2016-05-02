@@ -22,8 +22,8 @@ def get_csv(request):
 
 def home(request):
     context = {
-        'data': DataPoint.objects.order_by('-gathered_at')[:30],
-        'images': Image.objects.order_by('-gathered_at')[:20],
+        'data': DataPoint.objects.order_by('-gathered_at')[:10],
+        'images': Image.objects.order_by('-gathered_at')[:5],
         'photons': Photon.objects.order_by('name'),
         'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
         'data_pts': json.dumps([float(d[0]) for d in DataPoint.objects.order_by('-gathered_at').values_list('value')[:30]]),
@@ -37,7 +37,7 @@ def about(request):
     
 def time_lapse(request):    
     context = {
-        'files': Image.objects.all().values_list('image_address')[:50]
+        'files': [im[0] for im in Image.objects.all().values_list('image_address')[:50]]
     }
     return render(request, 'time_lapse.html', context)
     
