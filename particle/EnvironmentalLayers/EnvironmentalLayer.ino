@@ -11,7 +11,7 @@ String rest_response;
 const bool SHOW_DEBUG_INFO = true;
 
 #define DHTTYPE  DHT22       // Sensor type DHT11/21/22/AM2301/AM2302
-#define DHTPIN   2           // Digital pin for communications
+#define DHTPIN   3           // Digital pin for communications
 
 //declaration
 void dht_wrapper(); // must be declared before the lib initialization
@@ -56,12 +56,19 @@ void setup()
 
     Serial.begin(9600);
 
-    Serial.println("DHT Example program using DHT.acquireAndWait");
-    Serial.print("LIB version: ");
-    Serial.println(DHTLIB_VERSION);
-    Serial.println("---------------");
+    //while (!Serial.available()) {
+    //    Serial.println("Press any key to start.");
+    //    delay (1000);
+    //}
+
+    //Serial.println("DHT Example program using DHT.acquireAndWait");
+    //Serial.print("LIB version: ");
+    //Serial.println(DHTLIB_VERSION);
+    //Serial.println("---------------");
 
     publishCurrentState();
+
+
 }
 
 // This wrapper is in charge of calling
@@ -72,7 +79,8 @@ void dht_wrapper() {
 
 void loop()
 {
-
+  //publishCurrentState( );
+  //delay( 10000 );
 }
 
 
@@ -140,7 +148,7 @@ void readTemperature()
   Serial.print("Retrieving information from sensor: ");
   Serial.print("Read sensor: ");
 
-  int result = DHT.acquireAndWait( 60000 );
+  int result = DHT.acquireAndWait( 1000 );
 
   switch (result) {
       case DHTLIB_OK:
