@@ -38,7 +38,7 @@
                         },
                         yAxis: {
                             title: {
-                                text: 'Temperature (°F)'
+                                text: 'Temperature (°C)'
                             },
                             plotLines: [{
                                 value: 0,
@@ -47,7 +47,7 @@
                             }]
                         },
                         tooltip: {
-                            valueSuffix: " °F"
+                            valueSuffix: " °C"
                         },
                         legend: {
                             layout: 'vertical',
@@ -56,11 +56,17 @@
                             borderWidth: 0
                         },
                         series: [{
-                            name: 'Data Points',
-                            data: {{ data_pts }}.reverse()
+                            name: 'Decomposition Ambient Temperature',
+                            data: {{ thirty-six }}.reverse()
                         }, {
-                            name: 'New York',
-                            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                            name: 'Plant Ambient Temperature',
+                            data: {{ forty-one }}.reverse()
+                        }, {
+                            name: 'Decomposition Soil Temperature',
+                            data: {{ thirteen }}.reverse()
+                        }, {
+                            name: 'Plant Cell Temperature',
+                            data: {{ fourty-four }}.reverse()
                         }]
                     });
                 });
@@ -72,7 +78,7 @@
                 $(function () {
                     $('#temp_graph2').highcharts({
                         title: {
-                            text: 'Temperature By Layer',
+                            text: 'Soil/Cell Moisture and Humidity',
                             x: -20 //center
                         },
                         subtitle: {
@@ -86,7 +92,7 @@
                         },
                         yAxis: {
                             title: {
-                                text: 'Temperature (°F)'
+                                text: 'Moisture (%)'
                             },
                             plotLines: [{
                                 value: 0,
@@ -95,7 +101,7 @@
                             }]
                         },
                         tooltip: {
-                            valueSuffix: " °F"
+                            valueSuffix: " %"
                         },
                         legend: {
                             layout: 'vertical',
