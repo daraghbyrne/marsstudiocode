@@ -23,17 +23,28 @@ def get_csv(request):
 def home(request):
     context = {
         'data': DataPoint.objects.order_by('-gathered_at')[:15],
+        
         'images': Image.objects.order_by('-gathered_at')[:10],
+        
         'photons': Photon.objects.order_by('name'),
+        
         'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
+        
         'thirteen': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=13).order_by('-gathered_at').values_list('value')[:30]]),
+        
         'thirtysix': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=36).order_by('-gathered_at').values_list('value')[:30]]),
-        'fourtyone': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=41).order_by('-gathered_at').values_list('value')[:30]]),
-        'fourtyfour': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=44).order_by('-gathered_at').values_list('value')[:30]]),
+        
+        'fortyone': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=41).order_by('-gathered_at').values_list('value')[:30]]),
+        
+        'fortyfour': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=44).order_by('-gathered_at').values_list('value')[:30]]),
+        
         'ten': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=10).order_by('-gathered_at').values_list('value')[:30]]),
+        
         'twentyeight': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=28).order_by('-gathered_at').values_list('value')[:30]]),
+        
         'thirtyeight': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=38).order_by('-gathered_at').values_list('value')[:30]]),
-        'fourtythree': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=43).order_by('-gathered_at').values_list('value')[:30]]),
+        
+        'fortythree': json.dumps([float(d[0]) for d in DataPoint.objects.filter(sensor_id_id=43).order_by('-gathered_at').values_list('value')[:30]]),
     }
     return render(request, 'home.html', context)
     
