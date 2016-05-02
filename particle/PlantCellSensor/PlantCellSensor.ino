@@ -18,6 +18,11 @@ int soilMoistureReading = 0;
 int luminanceSensorPin = A2;
 int luminanceReading = 0;
 
+// Server Sensor Ids
+int ambientLightSensorId = 1;
+int soilMoistureSensorId = 1;
+int soilTemperatureSensorId = 1;
+
 // -----------------
 // Read temperature
 // -----------------
@@ -39,6 +44,8 @@ void setup()
 {
   Time.zone(-5);
 
+  setupServerSensorIds();
+
   // setup the library
   dallas.begin();
 
@@ -47,6 +54,26 @@ void setup()
   Serial.begin( 9600 );
 
   publishCurrentState( );
+}
+
+void setupServerSensorIds()
+{
+  String myID = System.deviceID();
+
+  Serial.println( "Device ID:" );
+  Serial.println( myID );
+
+  //  Studio 7
+  if( myID.equals( "2f002f001047353138383138" ) )
+  {
+    Serial.println( "Matches" );
+
+    ambientLightSensorId = 42;
+    soilMoistureSensorId = 43;
+    soilTemperatureSensorId = 44;
+  }
+
+
 }
 
 
@@ -62,8 +89,10 @@ void publishCurrentState( )
 
   printDebugInfo();
 
-  postReadingToServer( soilMoistureReading );
-  postReadingToServer( luminanceReading );
+  postReadingToServer( (luminanceReading*1.0f/ 40.95f), ambientLightSensorId );
+  postReadingToServer( (soilMoistureReading*1.0f/ 40.95f), soilMoistureSensorId );
+  postReadingToServer( soilProbeTemp, soilTemperatureSensorId );
+
 
 }
 
@@ -83,14 +112,33 @@ void readSensors()
 
 
 
-void postReadingToServer( int reading )
+void postReadingToServer( int reading, int sensor_id )
 {
   time_t time = Time.now();
 
   String timeString = String( Time.format(time, TIME_FORMAT_ISO8601_FULL) );
   timeString = timeString.replace("T", " ");
 
-  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=1"  ;
+  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=" + String( sensor_id )  ;
+
+  Serial.println( "INT POST:" );
+  Serial.println( post_data );
+
+  int statusCode = rest_client.post("/new_data/", post_data, &rest_response);
+
+}
+
+void postReadingToServer( double reading, int sensor_id )
+{
+  time_t time = Time.now();
+
+  String timeString = String( Time.format(time, TIME_FORMAT_ISO8601_FULL) );
+  timeString = timeString.replace("T", " ");
+
+  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=" + String( sensor_id )  ;
+
+  Serial.println( "FLOAT POST:" );
+  Serial.println( post_data );
 
   int statusCode = rest_client.post("/new_data/", post_data, &rest_response);
 

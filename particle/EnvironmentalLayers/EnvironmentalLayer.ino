@@ -48,6 +48,13 @@ float temperature;
 Timer publishTimer( 60000, publishCurrentState );
 
 
+// Server Sensor Ids
+int co2SensorId = 1;
+int humiditySensorId = 1;
+int dewPointSensorId = 1;
+int tempSensorId = 1;
+
+
 void setup()
 {
     Time.zone(-5);
@@ -55,6 +62,8 @@ void setup()
     publishTimer.start();
 
     Serial.begin(9600);
+
+    setupServerSensorIds();
 
     //while (!Serial.available()) {
     //    Serial.println("Press any key to start.");
@@ -84,6 +93,41 @@ void loop()
 }
 
 
+
+void setupServerSensorIds()
+{
+  String myID = System.deviceID();
+
+  Serial.println( "Device ID:" );
+  Serial.println( myID );
+
+  //  Decomp - Studio 3
+  if( myID.equals( "2a0018000947353138383138" ) )
+  {
+    Serial.println( "Matches" );
+
+    co2SensorId = 23;
+    humiditySensorId = 28;
+    dewPointSensorId = 32;
+    tempSensorId = 36;
+  }
+
+  //  Plant Layer Ambient
+  if( myID.equals( "1a003b000647353138383138" ) )
+  {
+    Serial.println( "Matches" );
+
+    co2SensorId = 37;
+    humiditySensorId = 38;
+    dewPointSensorId = 39;
+    tempSensorId = 41;
+
+  }
+
+}
+
+
+
 void publishCurrentState( )
 {
   //String stateStr = String( currentState );
@@ -92,10 +136,10 @@ void publishCurrentState( )
 
   printDebugInfo();
 
-  postReadingToServer( humidity, "humidity" );
-  postReadingToServer( dewPoint, "dewPoint" );
-  postReadingToServer( temperature, "temperature" );
-  postReadingToServer( co2_percentage, "co2" );
+  postReadingToServer( DHT.getHumidity(), "humidity", humiditySensorId );
+  postReadingToServer( DHT.getDewPoint(), "dewPoint", dewPointSensorId );
+  postReadingToServer( DHT.getCelsius(), "temperature", tempSensorId );
+  postReadingToServer( co2_percentage, "co2" , co2SensorId );
 
 }
 
@@ -115,27 +159,50 @@ void readSensors()
 
 
 
-void postReadingToServer( int reading, char* reading_type )
+void postReadingToServer( int reading, char* reading_type, int sensor_id )
 {
   time_t time = Time.now();
 
   String timeString = String( Time.format(time, TIME_FORMAT_ISO8601_FULL) );
   timeString = timeString.replace("T", " ");
 
-  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=1"  ;
+  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=" + String( sensor_id )  ;  ;
+
+  Serial.println( "INT POST:" );
+  Serial.println( post_data );
 
   int statusCode = rest_client.post("/new_data/", post_data, &rest_response);
 
 }
 
-void postReadingToServer( float reading, char* reading_type )
+void postReadingToServer( float reading, char* reading_type, int sensor_id )
 {
   time_t time = Time.now();
 
   String timeString = String( Time.format(time, TIME_FORMAT_ISO8601_FULL) );
   timeString = timeString.replace("T", " ");
 
-  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=1"  ;
+  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=" + String( sensor_id )  ;  ;
+
+  Serial.println( "FLOAT POST:" );
+  Serial.println( post_data );
+
+  int statusCode = rest_client.post("/new_data/", post_data, &rest_response);
+
+}
+
+
+void postReadingToServer( double reading, char* reading_type, int sensor_id )
+{
+  time_t time = Time.now();
+
+  String timeString = String( Time.format(time, TIME_FORMAT_ISO8601_FULL) );
+  timeString = timeString.replace("T", " ");
+
+  String post_data = "sensor_value=" + String( reading ) + "&timestamp=" + timeString + "&sensor_id=" + String( sensor_id )  ;  ;
+
+  Serial.println( "FLOAT POST:" );
+  Serial.println( post_data );
 
   int statusCode = rest_client.post("/new_data/", post_data, &rest_response);
 
