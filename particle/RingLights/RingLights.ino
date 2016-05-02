@@ -2,8 +2,8 @@
 #include "neopixel.h"
 
 // IMPORTANT: Set pixel COUNT, PIN and TYPE
-#define PIXEL_PIN D0
-#define PIXEL_COUNT 24
+#define PIXEL_PIN D2
+#define PIXEL_COUNT 32
 #define PIXEL_TYPE WS2812
 
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXEL_COUNT, PIXEL_PIN, PIXEL_TYPE);
