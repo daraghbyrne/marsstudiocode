@@ -18,56 +18,106 @@
   </div>
   <h3><span class="glyphicon glyphicon-info-sign"></span> Most recent data displayed first</h3>
   <div class="row">
-    {% if data %}
-    <div class="col-md-8">
-      <div id="temp_graph" style="width:100%; height:400px;"></div>
-      <script>
-            $(function () {
-                $('#temp_graph').highcharts({
-                    title: {
-                        text: 'Temperature By Layer',
-                        x: -20 //center
-                    },
-                    subtitle: {
-                        text: 'Most recent 30 entries',
-                        x: -20
-                    },
-                    xAxis: {
+      <div class="col-md-6">
+        <div id="temp_graph" style="width:100%; height:400px;"></div>
+        <script>
+                $(function () {
+                    $('#temp_graph').highcharts({
                         title: {
-                            text: 'Time: Left to Right -> Oldet to Newest'
-                        }
-                    },
-                    yAxis: {
-                        title: {
-                            text: 'Temperature (°F)'
+                            text: 'Temperature By Layer',
+                            x: -20 //center
                         },
-                        plotLines: [{
-                            value: 0,
-                            width: 1,
-                            color: '#808080'
+                        subtitle: {
+                            text: 'Most recent 30 entries',
+                            x: -20
+                        },
+                        xAxis: {
+                            title: {
+                                text: 'Time: Left to Right -> Oldet to Newest'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Temperature (°F)'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: " °F"
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: 'Data Points',
+                            data: {{ data_pts }}
+                        }, {
+                            name: 'New York',
+                            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
                         }]
-                    },
-                    tooltip: {
-                        valueSuffix: " °F"
-                    },
-                    legend: {
-                        layout: 'vertical',
-                        align: 'right',
-                        verticalAlign: 'middle',
-                        borderWidth: 0
-                    },
-                    series: [{
-                        name: 'Data Points',
-                        data: {{ data_pts }}
-                    }, {
-                        name: 'New York',
-                        data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
-                    }]
+                    });
                 });
-            });
-        </script>
-      </div>
-      <div class="col-md-4">
+            </script>
+      </div> 
+      <div class="col-md-6">
+          <div id="temp_graph" style="width:100%; height:400px;"></div>
+        <script>
+                $(function () {
+                    $('#temp_graph').highcharts({
+                        title: {
+                            text: 'Temperature By Layer',
+                            x: -20 //center
+                        },
+                        subtitle: {
+                            text: 'Most recent 30 entries',
+                            x: -20
+                        },
+                        xAxis: {
+                            title: {
+                                text: 'Time: Left to Right -> Oldet to Newest'
+                            }
+                        },
+                        yAxis: {
+                            title: {
+                                text: 'Temperature (°F)'
+                            },
+                            plotLines: [{
+                                value: 0,
+                                width: 1,
+                                color: '#808080'
+                            }]
+                        },
+                        tooltip: {
+                            valueSuffix: " °F"
+                        },
+                        legend: {
+                            layout: 'vertical',
+                            align: 'right',
+                            verticalAlign: 'middle',
+                            borderWidth: 0
+                        },
+                        series: [{
+                            name: 'Data Points',
+                            data: {{ data_pts }}
+                        }, {
+                            name: 'New York',
+                            data: [-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5]
+                        }]
+                    });
+                });
+            </script>
+      </div>   
+  </div>
+  <div class="row">
+    {% if data %}
+      <div class="col-md-12">
         <table class='table'>
             <tr><th>Sensor</th><th>Value</th><th>Date and Time</th></tr>
             <br>
@@ -81,15 +131,9 @@
         </table>
       </div>
       {% else %}
-<<<<<<< HEAD
       <div class="col-md-12">
         <p>There is no data at this point.</p>
       </div>
-=======
-        <div class="col-md-12">
-        <p>There is no data at this point.</p>
-        </div>
->>>>>>> 517d0f2e06e2affc80d0d904c51a4db59e45cc48
       {% endif %}
       <br><br>
     </div>
@@ -113,6 +157,6 @@
       </div>
     </div>
   <br>
-  </div> <!-- row -->
+  </div>
 </div>
 {% endblock %}
