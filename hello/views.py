@@ -22,8 +22,8 @@ def get_csv(request):
 
 def home(request):
     context = {
-        'data': DataPoint.objects.order_by('-gathered_at')[:10],
-        'images': Image.objects.order_by('-gathered_at')[:5],
+        'data': DataPoint.objects.order_by('-gathered_at')[:15],
+        'images': Image.objects.order_by('-gathered_at')[:10],
         'photons': Photon.objects.order_by('name'),
         'sensors': Sensor.objects.order_by('photon_id', 'sensor_type'),
         'thirteen': json.dumps([float(d[0]) for d in DataPoint.objects.filter(id=13).order_by('-gathered_at').values_list('value')[:30]]),
